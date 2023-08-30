@@ -1,4 +1,6 @@
-using CQRSExample.Application.Interfaces.Repository;
+using CQRSExample.Application.Features.Commands.Product;
+using CQRSExample.Application.Features.Queries.Product;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRSExample.Api.Controllers
@@ -7,19 +9,26 @@ namespace CQRSExample.Api.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly ISender _mediator;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(ISender mediator)
         {
-            _productRepository = productRepository;
+            _mediator = mediator;
         }
 
-        // [HttpGet("/products")]
-        // public async Task<IActionResult> GetProducts()
-        // {
-        //     var products = await _productRepository.GetAllAsync();
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var query = new GetAllProductsQuery();
 
+            return Ok(await _mediator.Send(query));
 
-        // }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(AddProductCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

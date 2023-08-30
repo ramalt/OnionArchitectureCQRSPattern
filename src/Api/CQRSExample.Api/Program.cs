@@ -1,4 +1,5 @@
 using CQRSExample.Persistence.Extensions;
+using CQRSExample.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistence();
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

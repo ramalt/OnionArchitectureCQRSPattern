@@ -1,6 +1,6 @@
 namespace CQRSExample.Application.Wrappers;
 
-public class ServiceResponse<T>
+public class ServiceResponse<T> : BaseResponse
 {
     public T Value { get; set; }
 
@@ -11,6 +11,6 @@ public class ServiceResponse<T>
     }
     public ServiceResponse()
     {
-        
+
     }
 }
